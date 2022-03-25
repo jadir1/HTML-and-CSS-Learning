@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+  <title>Breweries List</title>
+  <link href="https://fonts.googleapis.com/css?family=Oswald:300,700|Varela+Round" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1" >
+  </head>
+  <body>
+    <header>
+      <ul>
+        <a class="anchor" href="#about_beers">About Beers </a>
+        <a class="anchor" href="#card_list">Breweries Cards </a>
+      </ul>
+    </header>
+    
+    <div class="welcome">
+      <h1><strong>Welcome</strong> to our site!</h1>
+      <p>Here we'll give a short description about beers and its creation. We'll also provide a list of breweries from different places! Take a look at our selection of cards below card to check each brewery's information. </p>
+    </div>
+  
+    <div class="title"  id="about_beers">
+      <h2>About Beers</h2>
+        <h3 class="text">
+          <p>Beer is one of the oldest and most widely consumed alcoholic drinks in the world, and the third most popular drink overall after water and tea. It is produced by the brewing and fermentation of starches, mainly derived from cereal grains—most commonly from malted barley, though wheat, maize (corn), rice, and oats are also used. During the brewing process, fermentation of the starch sugars in the wort produces ethanol and carbonation in the resulting beer. Most modern beer is brewed with hops, which add bitterness and other flavours and act as a natural preservative and stabilizing agent. Other flavouring agents such as gruit, herbs, or fruits may be included or used instead of hops. In commercial brewing, the natural carbonation effect is often removed during processing and replaced with forced carbonation.</p>
+          <p>Some of humanity's earliest known writings refer to the production and distribution of beer: the Code of Hammurabi included laws regulating beer and beer parlours, and "The Hymn to Ninkasi", a prayer to the Mesopotamian goddess of beer, served as both a prayer and as a method of remembering the recipe for beer in a culture with few literate people.</p>
+          <p>Beer is distributed in bottles and cans and is also commonly available on draught, particularly in pubs and bars. The brewing industry is a global business, consisting of several dominant multinational companies and many thousands of smaller producers ranging from brewpubs to regional breweries. The strength of modern beer is usually around 4% to 6% alcohol by volume (ABV), although it may vary between 0.5% and 20%, with some breweries creating examples of 40% ABV and above.
+  Beer forms part of the culture of many nations and is associated with social traditions such as beer festivals, as well as a rich pub culture involving activities like pub crawling, pub quizzes and pub games.
+  When beer is distilled, the resulting liquor is a form of whisky.</p>
+      </h3>
+    </div>
+    <div id="card_list">
+      <h2 class="title"> Breweries Cards </h2>
+      <div id="container" class="container">
+      </div>
+    </div>
+    
+
+      <script>
+        function getBrew () {
+
+          const myHeaders = new Headers();
+
+          const myInit = { method: 'GET',
+            headers: myHeaders,
+            mode: 'cors',
+            cache: 'default' 
+          };
+            const url = "https://api.openbrewerydb.org/breweries"
+            fetch(url, myInit).then((response) => {
+              response.json().then((parsedResult) => {
+                createCards(parsedResult)
+      }) 
+  });
+} 
+
+function createCards(brewArray) {
+  const element = document.getElementById('container')
+  brewArray.map((el) => {
+    const newCard = document.createElement('div')
+    newCard.innerHTML = 
+    `<h3 class="card">
+      ${el.name}
+      <br></br>
+      Country: ${el.country}
+      <br></br>
+      Phone: ${el.phone || ""}
+      <br></br>
+      Website: <a href="${el.website_url}">${el.website_url || ""}</a>
+      
+    </h3>`
+    element.append(newCard)
+  })
+}
+getBrew()
+      </script>
+   </body>
+</html>
